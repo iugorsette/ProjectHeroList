@@ -1,47 +1,44 @@
 import api from '../../api';
-import React, { Component } from 'react';
-import './estilo.css';
+import React, { useState, useEffect } from 'react';
 import ListaHerois from '../ListaHerois';
+import './estilo.css';
 
-const query = 'spider';
-class ListaDeHeroi extends Component {
+const ListaDeHeroi = () => {
+    const [heroes, setHeroes] = useState([]);
+    const [query, setQuery] = useState('');
 
-    state = {
-        heroes: [],
-    }
-    async componentDidMount() {
-        const response = await api.get('')
+    useEffect(() => {
+        api.get("/ps/metahumans").then((res) => setHeroes(res.data));
+    }, []);
 
-        this.setState({ heroes: response.data });
-    }
+    const heroesFiltered = heroes.filter(
+        (heroi) => heroi.name.toLowerCase().indexOf(query.toLowerCase()) > -1,
+    );
 
-    render() {
+    return (
+        <><div>
+            <input
+                type="text"
+                value={query}
+                onChange={(ev) => setQuery(ev.target.value)}/>
 
-        const { heroes } = this.state;
-
-        const heroesFiltered = heroes.filter((heroi) => heroi.name.toLowerCase().indexOf(query.toLowerCase())> -1);
-
-        return (
-            <div className="lista">
-                {heroesFiltered.map(hero => (        // Se eu utilizar heroes aqui , seu o filtro ele funciona
- 
-                    <li key={hero.id} type='none'>
-                        <ListaHerois
-                            hero={hero.name}
-                            combat={hero.powerstats.combat}
-                            durability={hero.powerstats.durability}
-                            intelligence={hero.powerstats.intelligence}
-                            power={hero.powerstats.power}
-                            speed={hero.powerstats.speed}
-                            strength={hero.powerstats.strength}
-                            imagem={hero.images.sm}
-                        />
-
+        </div><div className="lista">
+                {heroesFiltered.map((hero) => (
+                    <li key={hero.id} type="none" >
+                                <ListaHerois
+                                    hero={hero.name}
+                                    combat={hero.powerstats.combat}
+                                    durability={hero.powerstats.durability}
+                                    intelligence={hero.powerstats.intelligence}
+                                    power={hero.powerstats.power}
+                                    speed={hero.powerstats.speed}
+                                    strength={hero.powerstats.strength}
+                                    imagem={hero.images.sm} />
                     </li>
+
                 ))}
-            </div>
-        )
-    }
-}
+            </div></>
+    );
+};
 
 export default ListaDeHeroi;
