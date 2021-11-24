@@ -31,18 +31,19 @@ export default function ListaHerois(props) {
     };
     const select = checked.toString();
     return (
-        <Button onClick={handleOpen} className="boxHeroi">
+        <><Button onClick={handleOpen}>
+            <div className="boxHeroi">
 
-            <div className="nomeHeroi">
-                {props.hero}
+                <div className="nomeHeroi">
+                    {props.hero}
+                </div>
+
+                <img className="imagemHeroi" src={props.imagem} alt={props.heroi} />
             </div>
-
-            <img className="imagemHeroi" src={props.imagem} alt={props.heroi} />
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-            >
+        </Button><Modal
+            open={open}
+            onClose={handleClose}
+        >
                 <Box sx={{ ...style, width: 400 }}>
                     <div className="nomeHeroi">
                         {props.hero}
@@ -58,7 +59,7 @@ export default function ListaHerois(props) {
                 </Box>
 
 
-            </Modal>
-        </Button>
+            </Modal></>
+
     )
 };
