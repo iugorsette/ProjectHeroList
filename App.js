@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ListaDeHeroi from './componentes/ListaDeHeroi';
 import './App.css';
 
-
-const api = 'http://homologacao3.azapfy.com.br/api/ps/metahumans';
-
 export default function App() {
   return (
-    <div>
+    <div className="App">
       <h1>Lista de heróis</h1>
       <ListaDeHeroi />
     </div>
